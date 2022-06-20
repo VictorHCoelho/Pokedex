@@ -74,3 +74,65 @@ body {
     width: 17%;
     text-align: center;
 }
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    #poke-list {
+        width: 80%;
+    }
+
+}
+
+@media (max-width: 425px) {
+
+    #logo-area img {
+        width: 220px;
+    }
+
+    #poke-list {
+        width: 90%;
+    }
+
+    .poke-item span {
+        font-size: 1rem;
+    }
+
+    #poke-nome {
+        width: 40%;
+        padding-left: 10px;
+    }
+
+    #dex-number {
+        width: 50px;
+        margin-right: 0;
+        text-align: left;
+    }
+
+    #poke-tipo {
+        width: 20%;
+        
+    }
+}
+
+@media (max-width: 375px) {
+
+    #poke-nome {
+        width: 30%;
+    }
+
+    .poke-item span {
+        font-size: .9rem;
+    }
+    
+}
+
+@media (max-width: 320px) {
+
+    .poke-item span {
+        font-size: .8rem;
+    }
+
+}
