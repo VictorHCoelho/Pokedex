@@ -2,4 +2,75 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #b41b1b;
+}
+
+/* Header */
+
+#logo-area {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+#logo-area img {
+    
+    width: 300px;
+}
+
+/* Pokedex Lista */
+#poke-area {
+    margin-top: 10px;
+}
+
+#poke-list {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none;
+}
+
+.poke-item {
+    background-color: #FFF;
+    border-right: 4px solid #000;
+    border-bottom: 4px solid #000;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;   
+}
+
+.poke-item:hover {
+    background-color: #EEE;
+}
+
+.poke-item img {    
+    height: 50px;
+    width: 50px;
+}
+
+.poke-item span {
+    font-size: 20px;
+}
+
+#dex-number {
+    width: 7%;
+    margin-right: 30px;
+    text-align: center;
+}
+
+#poke-nome {
+    width: 50%;
+    padding-left: 50px;
+}
+
+#poke-tipo {
+    width: 17%;
+    text-align: center;
 }
