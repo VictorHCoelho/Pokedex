@@ -1,61 +1,147 @@
-const url = "https://pokeapi.co/api/v2/pokedex/2"
+const url = "https://pokeapi.co/api/v2/pokedex/1"
 
 const pokeList = document.querySelector("#poke-list")
 const pokemonContainer = document.querySelector("#pokemon-container")
+
+const pokeImg = document.querySelector("#poke-img")
+const pokeInfo1 = document.querySelector("#poke-info1")
+const pokeInfo2 = document.querySelector("#poke-info2")
+const pokeText = document.querySelector("#dex-text")
 
 // Get id from URL
 const urlSearchParams = new URLSearchParams(window.location.search)
 const pokeId = urlSearchParams.get("id")
 
-// Get all pokemons
+const options = {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'default'
+}
 
-async function getAllPokemon() {
-    const response = await fetch(url);
-    console.log(response)
+// Verificação Pokemon ID
+if (!pokeId) {
+    // Get all pokemons
+    fetch(url, options)
+        .then(response => {
+            response.json()
+                .then(data => {
+                    data.pokemon_entries.map((poke) => {
+                        const item = document.createElement("a");
+                        const name = document.createElement("span");
+                        const number = document.createElement("span");
+                        const pokeNames = poke.pokemon_species.name.toUpperCase();
 
-    const data = await response.json();
-    console.log(data)
+                        name.innerText = pokeNames
+                        name.setAttribute("id", "poke-nome")
 
-    console.log(data.pokemon_entries)
-    
+                        number.innerText = "#" + poke.entry_number;
+                        number.setAttribute("id", "dex-number")
 
-    data.pokemon_entries.map((poke) => {
-        const item = document.createElement("a");
-        const name = document.createElement("span");
-        const number = document.createElement("span");
-        const pokeNames = poke.pokemon_species.name.toUpperCase();    
+                        item.setAttribute("class", "poke-item")
+                        item.setAttribute("href", `/data.html?id=${poke.entry_number}`)
 
-        name.innerText = pokeNames
-        name.setAttribute("id","poke-nome")
+                        item.appendChild(number)
+                        item.appendChild(name)
 
-        number.innerText = "#" + poke.entry_number;
-        number.setAttribute("id","dex-number")
+                        pokeList.appendChild(item);
+                    })
+                    console.log(data)
+                })
+        })
+        .catch(e => console.log("error " + e, message))
 
-        item.setAttribute("class","poke-item")
-        item.setAttribute("href",`/data.html?id=${poke.entry_number}`)
 
-        item.appendChild(number)
-        item.appendChild(name)        
+    // Get Pokemon types
+    fetch(`https://pokeapi.co/api/v2/pokemon/1`, options)
+        .then(response => {
+            response.json()
+                .then(
+                    data => {
+                        console.log(data)
+                    }
+                )
+        })
+        .catch(e => console.log("error " + e, message))
+} else {
 
-        pokeList.appendChild(item);
-    })
+    // Get Pokemon
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokeId}`, options)
+        .then(response => {
+            response.json()
+                .then(
+                    data => createPokemon(data)
+                )
+        })
+        .catch(e => console.log("error " + e, message))
+
+    // Get Pokemon Dex
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeId}`, options)
+        .then(response => {
+            response.json()
+                .then(data => {
+                    const descriptionName = document.createElement("span")
+                    const dexText = document.createElement("p")
+
+
+                    // Verificar o texto da dex em Inglês
+                    data.flavor_text_entries.map(flavorText => {
+                        if (flavorText.language.name == "en" && (flavorText.version.name == "x" || flavorText.version.name == "sword")) {
+                            dexText.innerHTML = flavorText.flavor_text.replace("", " ")
+                            console.log(flavorText)
+                        }
+                    })
+
+                    // Verificar o gênero do pokémon em inglês
+                    data.genera.map(genera => {
+                        if (genera.language.name == "en") {
+                            descriptionName.innerText = genera.genus
+                        }
+                    })
+
+
+
+                    pokeInfo1.appendChild(descriptionName)
+                    pokeText.appendChild(dexText)
+                })
+        })
+        .catch(e => console.log("error " + e, message))
+    //getPokemon(pokeId)
+    //getPokemonDex(pokeId)
 }
 
 
-// Get Pokemon
-async function getPokemon(pokeId) {
+/*data.pokemon_entries.map((poke) => {
+    const item = document.createElement("a");
+    const name = document.createElement("span");
+    const number = document.createElement("span");
+    const pokeNames = poke.pokemon_species.name.toUpperCase();    
+
+    name.innerText = pokeNames
+    name.setAttribute("id","poke-nome")
+
+    number.innerText = "#" + poke.entry_number;
+    number.setAttribute("id","dex-number")
+
+    item.setAttribute("class","poke-item")
+    item.setAttribute("href",`/data.html?id=${poke.entry_number}`)
+
+    item.appendChild(number)
+    item.appendChild(name)        
+
+    pokeList.appendChild(item);
+})
+}*/
+
+/*async function getPokemon(pokeId) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeId}`)
     const data = await response.json();
     console.log(data);
 
     createPokemon(data);
-}
+}*/
 
 // CreatePokemon
 function createPokemon(data) {
-    const div = document.createElement("div")
-    div.setAttribute("id","poke-info")
-
     const name = document.createElement("span")
     const number = document.createElement("span")
     const height = document.createElement("span")
@@ -63,52 +149,99 @@ function createPokemon(data) {
     const sprite = document.createElement("img")
 
     name.innerText = data.name.toUpperCase()
-    sprite.setAttribute("src",data.sprites.versions["generation-i"]["red-blue"].front_default)
-    number.innerText = "#" + data.id
-    height.innerText = "Height:" + data.height
-    weight.innerText = "Weight:" + data.weight
-    
-    div.appendChild(sprite)
-    div.appendChild(number)
-    div.appendChild(name)
-    div.appendChild(height)
-    div.appendChild(weight)   
-    
+    sprite.setAttribute("src", data.sprites.versions["generation-v"]["black-white"].front_default)
+    number.innerText = "No. " + data.id
+    height.innerText = "HT: " + data.height
+    weight.innerText = "WT: " + data.weight
+
+    pokeImg.appendChild(sprite)
+    pokeInfo1.appendChild(number)
+    pokeInfo1.appendChild(name)
+    pokeInfo2.appendChild(height)
+    pokeInfo2.appendChild(weight)
+
     // Passa por todos os objetos de tipo
     data.types.map((poke) => {
-        const type = document.createElement("span")        
-        
-        type.innerText = poke.type.name.charAt(0).toUpperCase() + poke.type.name.slice(1)
-        div.appendChild(type)
+        const type = document.createElement("span")
+        type.setAttribute("class", "poke-types")
+        const typeName = poke.type.name.charAt(0).toUpperCase() + poke.type.name.slice(1)
+        switch (typeName) {
+            case "Grass":
+                type.style.backgroundColor = "#75C144"
+                break;
+            case "Poison":
+                type.style.backgroundColor = "#A5419E"
+                break;
+            case "Fire":
+                type.style.backgroundColor = "#EA8138"
+                break;
+            case "Normal":
+                type.style.backgroundColor = "#A5A977"
+                break
+            case "Water":
+                type.style.backgroundColor = "#6195F5"
+                break
+            case "Electric":
+                type.style.backgroundColor = "#F8D325"
+                break
+            case "Bug":
+                type.style.backgroundColor = "#A9B620"
+                break
+            case "Ghost":
+                type.style.backgroundColor = "#7053A4"
+                break
+            case "Ice":
+                type.style.backgroundColor = "#96D9D8"
+                break
+            case "Flying":
+                type.style.backgroundColor = "#AD95F6"
+                break
+            case "Fighting":
+                type.style.backgroundColor = "#BE372C"
+                break
+            case "Ground":
+                type.style.backgroundColor = "#D4BC5B"
+                break
+            case "Rock":
+                type.style.backgroundColor = "#BB9F33"
+                break
+            case "Dragon":
+                type.style.backgroundColor = "#6F3BF8"
+                break
+            case "Psychic":
+                type.style.backgroundColor = "#FF568E"
+                break
+            case "Fairy":
+                type.style.backgroundColor = "#F69ABA"
+                break
+            case "Dark":
+                type.style.backgroundColor = "#404040"
+                break
+            default:
+                break;
+        }
+        type.innerText = typeName
+        pokeInfo2.appendChild(type)
     })
 
-    pokemonContainer.appendChild(div)
 }
 
-// Get Pokemon Dex
-async function getPokemonDex(pokeId) {
+
+
+/*async function getPokemonDex(pokeId) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeId}`)
     const data = await response.json();
     console.log(data);
 
     const descriptionName = document.createElement("span")
-    const divText = document.createElement("div")
     const dexText = document.createElement("p")
 
     descriptionName.innerText = data.genera[7].genus
-    dexText.innerText = data.flavor_text_entries[0].flavor_text.replace("","")
-    
-    divText.appendChild(descriptionName)
-    divText.appendChild(dexText)
-    
-    pokemonContainer.appendChild(divText)
+    dexText.innerText = data.flavor_text_entries[0].flavor_text.replace("", " ")
 
-}
+    pokeInfo1.appendChild(descriptionName)
+    pokeText.appendChild(dexText)
 
-// Verificação Pokemon ID
-if(!pokeId) {
-    getAllPokemon()
-} else {
-    getPokemon(pokeId)
-    getPokemonDex(pokeId)
-}
+
+}*/
+
