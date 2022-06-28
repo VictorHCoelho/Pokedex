@@ -39,13 +39,12 @@ body {
     list-style: none;
 }
 
-.poke-item {
-    height: 60px;
+.poke-item {    
     background-color: #FFF;
     border-right: 4px solid #000;
     border-bottom: 4px solid #000;
     border-radius: 20px;
-    padding: 10px;
+    padding: 0 10px;
     margin: 10px 0;
     display: flex;
     align-items: center;
@@ -59,8 +58,8 @@ body {
 }
 
 .poke-item img {    
-    height: 50px;
-    width: 50px;
+    height: 80px;
+    width: 80px;
 }
 
 
@@ -146,7 +145,7 @@ body {
     background-color: #3e8afc;
     width: 100px;
     text-align: center;
-    margin: 2px 0;
+    margin: 2px 8px 2px 0;
 }
 
 #btn-back {
