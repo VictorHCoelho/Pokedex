@@ -8,6 +8,8 @@ const pokeInfo1 = document.querySelector("#poke-info1")
 const pokeInfo2 = document.querySelector("#poke-info2")
 const pokeText = document.querySelector("#dex-text")
 
+const searchPoke = document.querySelector("#search-poke")
+
 // Get id from URL
 const urlSearchParams = new URLSearchParams(window.location.search)
 const pokeId = urlSearchParams.get("id")
@@ -20,13 +22,26 @@ const options = {
 
 // Verificação Pokemon ID
 if (!pokeId) {
+    // Search Pokémon
+    let pokemons = []   
+    
+    searchPoke.addEventListener("input", e => {
+        const value = e.target.value.toLowerCase()
+        pokemons.forEach(poke => {
+            const isVisible = poke.name.toLowerCase().includes(value)
+            poke.element.classList.toggle("hide", !isVisible)
+            console.log(poke)
+        })
+        
+    })
+
     // Get all pokemons URL
     fetch(`${url}/pokemon/?limit=898`, options)
         .then(response => {
             response.json()
                 .then(data => {
                     console.log(data.next)
-                    data.results.map((poke) => {
+                    pokemons = data.results.map((poke) => {
                         const item = document.createElement("a");
                         const name = document.createElement("span");
                         const number = document.createElement("span");
@@ -34,7 +49,6 @@ if (!pokeId) {
 
                         item.setAttribute("class", "poke-item")
 
-                        //name.innerText = poke.name
                         item.appendChild(number)
                         item.appendChild(sprite)
                         item.appendChild(name)
@@ -64,12 +78,14 @@ if (!pokeId) {
                                             item.appendChild(type)
                                         })
 
-                                    }
+                                        
+                                    }                                    
                                 )
                         })
                             .catch(e => console.log("error " + e, message))
 
                         pokeList.appendChild(item);
+                        return {name: poke.name, element: item}
                     })
                 })
         })

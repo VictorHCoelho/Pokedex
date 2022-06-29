@@ -62,8 +62,6 @@ body {
     width: 80px;
 }
 
-
-
 #dex-number {
     width: 7%;
     margin-right: 30px;
@@ -78,6 +76,18 @@ body {
 #poke-tipo {
     width: 17%;
     text-align: center;
+}
+
+#search-box form {        
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#search-poke {
+    width: 100%;
+    height: 40px;
+    padding: 20px;
 }
 
 /* Pokemon Page */
@@ -164,6 +174,10 @@ body {
 
 #btn-back:hover {
     background-color: #62a0fc;
+}
+
+.hide {
+    display: none;
 }
 
 /* Responsive */
