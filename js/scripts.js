@@ -63,7 +63,8 @@ if (!pokeId) {
                                         name.innerText = pokeNames.toUpperCase()
                                         name.setAttribute("id", "poke-nome")
 
-                                        number.innerText = "#" + dataPoke.id;
+                                        number.innerText = "#" + dexNumber(dataPoke) 
+
                                         number.setAttribute("id", "dex-number")
 
                                         sprite.setAttribute("src", dataPoke.sprites.versions["generation-v"]["black-white"].front_default)
@@ -104,9 +105,12 @@ if (!pokeId) {
                         const weight = document.createElement("span")
                         const sprite = document.createElement("img")
 
+                        document.title = `Pokedex - ${data.species.name.charAt(0).toUpperCase() + data.species.name.slice(1)}`
+
                         name.innerText = data.species.name.toUpperCase()
                         sprite.setAttribute("src", data.sprites.versions["generation-v"]["black-white"].front_default)
-                        number.innerText = "No. " + data.id
+
+                        number.innerText = "No. " + dexNumber(data)
                         height.innerText = "HT: " + data.height
                         weight.innerText = "WT: " + data.weight
 
@@ -218,5 +222,15 @@ function getTypeColors(typeName, type) {
             break
         default:
             break;
+    }
+}
+
+function dexNumber(data) {
+    if (data.id < 10) {                        
+        return "00" + data.id;
+    } else if (data.id >= 10 && data.id < 100) {
+        return "0" + data.id;
+    } else {
+        return data.id;
     }
 }

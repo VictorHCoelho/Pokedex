@@ -35,8 +35,7 @@ body {
 #poke-list {
     width: 60%;
     margin-left: auto;
-    margin-right: auto;
-    list-style: none;
+    margin-right: auto;    
 }
 
 .poke-item {    
@@ -74,14 +73,12 @@ body {
 }
 
 #poke-tipo {
-    width: 17%;
+    width: 100px;
     text-align: center;
 }
 
-#search-box form {        
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+#search-box {
+    margin-bottom: 30px;
 }
 
 #search-poke {
@@ -152,11 +149,10 @@ body {
 
 .poke-types {
     color: #FFF;
-    border-radius: 10px;
-    background-color: #3e8afc;
+    border-radius: 8px;    
     width: 100px;
     text-align: center;
-    margin: 2px 8px 2px 0;
+    margin: 2px 8px 2px 0;    
 }
 
 #btn-back {
@@ -183,10 +179,32 @@ body {
 
 /* Responsive */
 
+@media (max-width: 1024px) {
+
+    #pokemon-container {
+        width: 50%;
+    }
+
+}
+
 @media (max-width: 768px) {
 
     #poke-list {
         width: 80%;
+    }
+
+    #pokemon-container {
+        width: 60%;
+    }
+
+    #poke-img img {
+        height: 180px;
+        width: 180px;
+    }
+
+    #poke-nome {
+        padding: 10px;
+        width: 35%;
     }
 
 }
@@ -206,20 +224,43 @@ body {
     }
 
     #poke-nome {
-        width: 40%;
-        padding-left: 10px;
+        width: 28%;
+        padding-right: 10px;        
     }
 
     #dex-number {
-        width: 50px;
+        width: 35px;
         margin-right: 0;
         text-align: left;
     }
 
-    #poke-tipo {
-        width: 20%;
-        
+    .poke-item img {    
+        height: 60px;
+        width: 60px;
     }
+
+    .poke-types {
+        width: 70px;
+    }
+
+    #search-poke {
+        font-size: 1rem;
+    }
+
+    #pokemon-container {
+        width: 90%;        
+    }
+
+    #pokemon-container span, #pokemon-container p, #pokemon-container a {
+        font-size: 1rem;
+    }
+
+    #poke-img img {
+        height: 150px;
+        width: 150px;
+    }
+
+    
 }
 
 @media (max-width: 375px) {
@@ -231,6 +272,15 @@ body {
     .poke-item span {
         font-size: .9rem;
     }
+
+    #pokemon-container {
+        width: 95%;        
+    }
+
+    #poke-img img {
+        height: 130px;
+        width: 130px;
+    }
     
 }
 
@@ -238,6 +288,11 @@ body {
 
     .poke-item span {
         font-size: .8rem;
+    }
+
+    #poke-img img {
+        height: 110px;
+        width: 110px;
     }
 
 }
