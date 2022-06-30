@@ -2,13 +2,13 @@ const url = "https://pokeapi.co/api/v2"
 
 const pokeList = document.querySelector("#poke-list")
 const pokemonContainer = document.querySelector("#pokemon-container")
+const searchPoke = document.querySelector("#search-poke")
 
 const pokeImg = document.querySelector("#poke-img")
 const pokeInfo1 = document.querySelector("#poke-info1")
 const pokeInfo2 = document.querySelector("#poke-info2")
 const pokeText = document.querySelector("#dex-text")
 
-const searchPoke = document.querySelector("#search-poke")
 
 // Get id from URL
 const urlSearchParams = new URLSearchParams(window.location.search)
@@ -23,8 +23,8 @@ const options = {
 // Verificação Pokemon ID
 if (!pokeId) {
     // Search Pokémon
-    let pokemons = []   
-    
+    let pokemons = []
+
     searchPoke.addEventListener("input", e => {
         const value = e.target.value.toLowerCase()
         pokemons.forEach(poke => {
@@ -32,7 +32,7 @@ if (!pokeId) {
             poke.element.classList.toggle("hide", !isVisible)
             console.log(poke)
         })
-        
+
     })
 
     // Get all pokemons URL
@@ -40,14 +40,13 @@ if (!pokeId) {
         .then(response => {
             response.json()
                 .then(data => {
-                    console.log(data.next)
                     pokemons = data.results.map((poke) => {
                         const item = document.createElement("a");
+                        item.setAttribute("class", "poke-item")
+
                         const name = document.createElement("span");
                         const number = document.createElement("span");
                         const sprite = document.createElement("img")
-
-                        item.setAttribute("class", "poke-item")
 
                         item.appendChild(number)
                         item.appendChild(sprite)
@@ -78,14 +77,14 @@ if (!pokeId) {
                                             item.appendChild(type)
                                         })
 
-                                        
-                                    }                                    
+
+                                    }
                                 )
                         })
                             .catch(e => console.log("error " + e, message))
 
                         pokeList.appendChild(item);
-                        return {name: poke.name, element: item}
+                        return { name: poke.name, element: item }
                     })
                 })
         })
@@ -98,7 +97,35 @@ if (!pokeId) {
         .then(response => {
             response.json()
                 .then(
-                    data => createPokemon(data)
+                    data => {
+                        const name = document.createElement("span")
+                        const number = document.createElement("span")
+                        const height = document.createElement("span")
+                        const weight = document.createElement("span")
+                        const sprite = document.createElement("img")
+
+                        name.innerText = data.species.name.toUpperCase()
+                        sprite.setAttribute("src", data.sprites.versions["generation-v"]["black-white"].front_default)
+                        number.innerText = "No. " + data.id
+                        height.innerText = "HT: " + data.height
+                        weight.innerText = "WT: " + data.weight
+
+                        pokeImg.appendChild(sprite)
+                        pokeInfo1.appendChild(number)
+                        pokeInfo1.appendChild(name)
+                        pokeInfo2.appendChild(height)
+                        pokeInfo2.appendChild(weight)
+
+                        // Passa por todos os objetos de tipo
+                        data.types.map((poke) => {
+                            const type = document.createElement("span")
+                            type.setAttribute("class", "poke-types")
+                            const typeName = poke.type.name.charAt(0).toUpperCase() + poke.type.name.slice(1)
+                            getTypeColors(typeName, type)
+                            type.innerText = typeName
+                            pokeInfo2.appendChild(type)
+                        })
+                    }
                 )
         })
         .catch(e => console.log("error " + e, message))
@@ -131,38 +158,6 @@ if (!pokeId) {
                 })
         })
         .catch(e => console.log("error " + e, message))
-}
-
-// CreatePokemon
-function createPokemon(data) {
-    const name = document.createElement("span")
-    const number = document.createElement("span")
-    const height = document.createElement("span")
-    const weight = document.createElement("span")
-    const sprite = document.createElement("img")
-
-    name.innerText = data.species.name.toUpperCase()
-    sprite.setAttribute("src", data.sprites.versions["generation-v"]["black-white"].front_default)
-    number.innerText = "No. " + data.id
-    height.innerText = "HT: " + data.height
-    weight.innerText = "WT: " + data.weight
-
-    pokeImg.appendChild(sprite)
-    pokeInfo1.appendChild(number)
-    pokeInfo1.appendChild(name)
-    pokeInfo2.appendChild(height)
-    pokeInfo2.appendChild(weight)
-
-    // Passa por todos os objetos de tipo
-    data.types.map((poke) => {
-        const type = document.createElement("span")
-        type.setAttribute("class", "poke-types")
-        const typeName = poke.type.name.charAt(0).toUpperCase() + poke.type.name.slice(1)
-        getTypeColors(typeName, type)
-        type.innerText = typeName
-        pokeInfo2.appendChild(type)
-    })
-
 }
 
 function getTypeColors(typeName, type) {

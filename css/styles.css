@@ -86,8 +86,9 @@ body {
 
 #search-poke {
     width: 100%;
-    height: 40px;
+    height: 60px;
     padding: 20px;
+    border-radius: 15px;
 }
 
 /* Pokemon Page */
