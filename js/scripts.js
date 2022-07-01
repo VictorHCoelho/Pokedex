@@ -57,7 +57,7 @@ if (!pokeId) {
                             responsePoke.json()
                                 .then(
                                     dataPoke => {
-                                        item.setAttribute("href", `/data.html?id=${dataPoke.id}`)
+                                        item.setAttribute("href", `data.html?id=${dataPoke.id}`)
 
                                         const pokeNames = dataPoke.species.name;
                                         name.innerText = pokeNames.toUpperCase()
