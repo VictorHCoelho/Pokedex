@@ -1,6 +1,14 @@
 @font-face {
     font-family: 'Pokemon Pixel Font';
     src: url(../fonts/pokemon_pixel_font.ttf) format('truetype');
+    src: url(../fonts/Pokemon-Pixel-Font.eot);
+    src: url(../fonts/Pokemon-Pixel-Font.eot?#iefix) format('embedded-opentype'),
+    url(../fonts/Pokemon-Pixel-Font.woff2) format('woff2'),
+        url(../fonts/Pokemon-Pixel-Font.woff) format('woff'),
+        url(../fonts/Pokemon-Pixel-Font.svg#Pokemon-Pixel-Font) format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 * {
