@@ -59,7 +59,7 @@ if (!pokeId) {
                                     dataPoke => {
                                         item.setAttribute("href", `data.html?id=${dataPoke.id}`)
 
-                                        const pokeNames = dataPoke.species.name;
+                                        const pokeNames = dataPoke.species.name.replace("nidoran-m", "nidoran-♂").replace("nidoran-f", "nidoran-♀");
                                         name.innerText = pokeNames.toUpperCase()
                                         name.setAttribute("id", "poke-nome")
 
@@ -105,9 +105,9 @@ if (!pokeId) {
                         const weight = document.createElement("span")
                         const sprite = document.createElement("img")
 
-                        document.title = `Pokedex - ${data.species.name.charAt(0).toUpperCase() + data.species.name.slice(1)}`
+                        document.title = `Pokedex - ${data.species.name.charAt(0).toUpperCase() + data.species.name.replace("nidoran-m", "nidoran-♂").replace("nidoran-f", "nidoran-♀").slice(1)}`
 
-                        name.innerText = data.species.name.toUpperCase()
+                        name.innerText = data.species.name.replace("nidoran-m", "nidoran-♂").replace("nidoran-f", "nidoran-♀").toUpperCase()
                         sprite.setAttribute("src", data.sprites.versions["generation-v"]["black-white"].front_default)
 
                         number.innerText = "No. " + dexNumber(data)
