@@ -15,8 +15,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Pokemon Pixel Font', Times, serif;
-    font-size: 1.4rem;
+    font-family: 'Arial', Times, serif;
+    font-size: 1.02em;
 }
 
 body {
@@ -224,7 +224,7 @@ body {
     }    
 
     .poke-item span, #search-poke {
-        font-size: 1rem;
+        font-size: 0.7em;
     }
 
     .poke-item .poke-types {
@@ -240,7 +240,7 @@ body {
     }
 
     #pokemon-container span, #pokemon-container p, #pokemon-container a {
-        font-size: 1.2rem;
+        font-size: 1em;
     }
     
 }
@@ -253,6 +253,8 @@ body {
 
     #poke-nome {
         width: 30%;
+        padding-left: 0;
+        margin-left: 2px;
     }
 
     #dex-number {
@@ -268,7 +270,7 @@ body {
     
 
     #pokemon-container span, #pokemon-container p, #pokemon-container a {
-        font-size: 1rem;
+        font-size: 1em;
     }
 
     #poke-img img {
@@ -286,7 +288,7 @@ body {
 
 
     .poke-item span, #search-poke {
-        font-size: .75rem;
+        font-size: .6em;
     }
 
     .poke-item .poke-types {
@@ -304,10 +306,10 @@ body {
     
 }
 
-@media (max-width: 320px) {
+@media (max-width: 330px) {
 
     .poke-item span {
-        font-size: .65rem;
+        font-size: .55em;
     }
 
     .poke-item .poke-types {

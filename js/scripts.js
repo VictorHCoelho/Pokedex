@@ -35,6 +35,8 @@ if (!pokeId) {
 
     })
 
+    
+
     // Get all pokemons URL
     fetch(`${url}/pokemon/?limit=898`, options)
         .then(response => {
@@ -42,7 +44,7 @@ if (!pokeId) {
                 .then(data => {
                     pokemons = data.results.map((poke) => {
                         const item = document.createElement("a");
-                        item.setAttribute("class", "poke-item")
+                        item.setAttribute("class", "poke-item")                                            
 
                         const name = document.createElement("span");
                         const number = document.createElement("span");
@@ -51,6 +53,7 @@ if (!pokeId) {
                         item.appendChild(number)
                         item.appendChild(sprite)
                         item.appendChild(name)
+                        
 
                         // Get all pokemon data
                         fetch(poke.url, options).then(responsePoke => {
